@@ -5,26 +5,41 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
+import getDailyQuiz from './quizes/Quiz';
 
-export default function Landing() {
+const connectToWallet = () => {
+  console.log('Connect to wallet!')
+};
+
+
+function MetamaskConnect() {
 
   const [credentials, setCredentials] = useState('');
 
   return (
     <Container>
-      <Typography variant="h2" align="center">
-        Welcome to your Daily Crypto Survey
-      </Typography>
-
       <Typography variant="body1" gutterBottom>
-        Connect your Metamask wallet:
+        Metamask wallet:
       </Typography>
       <TextField 
         onChange={(e) => setCredentials(e.target.value)}
-        label="Credentials"
+        label="Wallet"
         variant="outlined"
-      />      
+      />
+      <Button
+        onClick={() => connectToWallet()}
+        variant="outlined"
+      >
+        Connect to wallet
+      </Button>       
+    </Container>
+  );
+}
 
+function showQuizBalance() {
+  
+  return (
+    <Container>
       <div style={{display:"flex"}}>
         <Typography variant="body1" gutterBottom>
           Your $QUIZ balance:
@@ -33,25 +48,61 @@ export default function Landing() {
           $0
         </Typography>
       </div>
+    </Container>
+  );
+}
 
+function showSurveyIntro() {
+
+  // This would be replaced by a request to the backend
+  const quiz = getDailyQuiz();
+
+  const startSurvey = () => {
+    console.log('Start survey!');
+  };
+
+  return (
+    <Container>
       <Typography variant="h3" align="center">
         Today's survey
       </Typography>
       <Typography variant="h3" align="center">
-          Music
+          {quiz.title}
       </Typography>
-
+      <div align="center">
+        <img
+          src={quiz.image}
+          width="400"
+        />
+      </div>
+      
       <Box textAlign="center">
-
         <Button 
-          onClick={() => console.log('Start quiz!')} 
+          onClick={() => startSurvey()} 
           variant="contained" 
           color="primary" 
           align="center" 
           type="submit">
-          Start quiz!
+          Start survey!
         </Button>
       </Box>
+
+    </Container>
+  );
+}
+ 
+export default function Landing() {
+
+  return (
+    <Container>
+      <Typography variant="h2" align="center">
+        Welcome to your Daily Crypto Survey
+      </Typography>
+
+      { MetamaskConnect() }  
+      { showQuizBalance() }
+      { showSurveyIntro() }
+
     </Container>
   )
 }
