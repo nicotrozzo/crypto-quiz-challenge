@@ -37,32 +37,36 @@ function MetamaskConnect() {
     }
   };
 
-
   return (
     <Container>
       { active ?
-        <Typography>
-          Connected to wallet: <b>{account}</b>.
+        <Typography align="center">
+          Connected to wallet: <b>{account}</b>
         </Typography>
         :
-        <Button
-          onClick={connectToWallet}
-          variant="outlined"
-        >
-          Connect to Metamask wallet
-        </Button>
+        <div align="center">
+          <Button
+            onClick={connectToWallet}
+            variant="outlined"
+            align="center"
+          >
+            Connect to Metamask wallet
+          </Button>
+        </div>
       }
       { (chainId == ropstenData.chainId) ?
-        <Typography>
-          Connected to ropsten
+        <Typography align="center">
+          Connected to ropsten network
         </Typography>
         :
         ( active ?
-        <Button onClick={connectToRopsten}>
-          Connect to ropsten
-        </Button>
-        :
-        <Typography></Typography>
+          <div align="center">
+            <Button onClick={connectToRopsten}>
+              Connect to ropsten network
+            </Button>
+          </div>
+          :
+          <Typography></Typography>
         )
       }
     </Container>
@@ -71,18 +75,15 @@ function MetamaskConnect() {
 
 function ShowQuizBalance() {
   
-  const [ balance ] = useBalance(TokenListRopsten[0].address, TokenListRopsten[0].decimals);
+  var tokenIndex = 0;  // $ETH until I create $QUIZ
+
+  const [ balance ] = useBalance(TokenListRopsten[tokenIndex].address, TokenListRopsten[tokenIndex].decimals);
 
   return (
     <Container>
-      <div style={{display:"flex"}}>
-        <Typography variant="body1" gutterBottom>
-          Your balance:
-        </Typography>
-        <Typography variant="body1" gutterBottom>
-          &nbsp;{balance} QUIZ
-        </Typography>
-      </div>
+      <Typography align="center" gutterBottom>
+        Your balance: <b>{balance} {TokenListRopsten[tokenIndex].symbol}</b>
+      </Typography>
     </Container>
   );
 }
@@ -131,7 +132,7 @@ export default function Landing() {
   return (
     <Container>
       <Typography variant="h2" align="center">
-        Welcome to your Daily Survey
+        Welcome to your Daily Survey!
       </Typography>
 
       { MetamaskConnect() }  
