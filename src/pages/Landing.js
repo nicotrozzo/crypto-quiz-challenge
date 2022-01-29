@@ -6,32 +6,38 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import getDailyQuiz from './quizes/Quiz';
-
-const connectToWallet = () => {
-  console.log('Connect to wallet!')
-};
-
+import { injected } from '../components/connectors';
+import { useWeb3React } from '@web3-react/core';
 
 function MetamaskConnect() {
 
   const [credentials, setCredentials] = useState('');
 
+  const { active, account, library, connector, activate, deactivate } = useWeb3React();
+
+  const connectToWallet = async () => {
+    console.log('Connect to wallet!');
+    try {
+      await activate(injected);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Container>
-      <Typography variant="body1" gutterBottom>
-        Metamask wallet:
-      </Typography>
-      <TextField 
-        onChange={(e) => setCredentials(e.target.value)}
-        label="Wallet"
-        variant="outlined"
-      />
-      <Button
-        onClick={() => connectToWallet()}
-        variant="outlined"
-      >
-        Connect to wallet
-      </Button>       
+      { active ?
+        <Typography>
+          Connected with <b>{account}</b>.
+        </Typography>
+        :
+        <Button
+          onClick={connectToWallet}
+          variant="outlined"
+        >
+          Connect to Metamask wallet
+        </Button>
+      }
     </Container>
   );
 }
@@ -44,7 +50,7 @@ function showQuizBalance() {
         <Typography variant="body1" gutterBottom>
           Your $QUIZ balance:
         </Typography>
-        <Typography variant="body1" color="secondary" gutterBottom>
+        <Typography variant="body1" gutterBottom>
           $0
         </Typography>
       </div>
@@ -78,7 +84,7 @@ function showSurveyIntro() {
       
       <Box textAlign="center">
         <Button 
-          onClick={() => startSurvey()} 
+          onClick={startSurvey} 
           variant="contained" 
           color="primary" 
           align="center" 
@@ -96,7 +102,7 @@ export default function Landing() {
   return (
     <Container>
       <Typography variant="h2" align="center">
-        Welcome to your Daily Crypto Survey
+        Welcome to your Daily Survey
       </Typography>
 
       { MetamaskConnect() }  
