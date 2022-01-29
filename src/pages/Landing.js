@@ -4,16 +4,19 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
 import getDailyQuiz from './quizes/Quiz';
 import { injected } from '../components/connectors';
 import { useWeb3React } from '@web3-react/core';
+import TokenListRopsten from '../assets/token_list_ropsten.json';
+import useBalance from '../actions/useBalance';
+
+import BN from 'bn.js'
+
+const ropstenChainId = 3;
 
 function MetamaskConnect() {
 
-  const [credentials, setCredentials] = useState('');
-
-  const { active, account, library, connector, activate, deactivate } = useWeb3React();
+  const { active, account, chainId, activate } = useWeb3React();
 
   const connectToWallet = async () => {
     console.log('Connect to wallet!');
@@ -24,11 +27,16 @@ function MetamaskConnect() {
     }
   };
 
+  const connectToRopsten = async () => {
+    console.log(`Current network: ${chainId}`);
+  };
+
+
   return (
     <Container>
       { active ?
         <Typography>
-          Connected with <b>{account}</b>.
+          Connected to wallet: <b>{account}</b>.
         </Typography>
         :
         <Button
@@ -38,20 +46,31 @@ function MetamaskConnect() {
           Connect to Metamask wallet
         </Button>
       }
+      { chainId == ropstenChainId ?
+        <Typography>
+          Connected to ropsten
+        </Typography>
+        :
+        <Button onClick={connectToRopsten}>
+          Connect to ropsten
+        </Button>
+      }
     </Container>
   );
 }
 
-function showQuizBalance() {
+function ShowQuizBalance() {
   
+  const [ balance ] = useBalance(TokenListRopsten[0].address, TokenListRopsten[0].decimals);
+
   return (
     <Container>
       <div style={{display:"flex"}}>
         <Typography variant="body1" gutterBottom>
-          Your $QUIZ balance:
+          Your balance:
         </Typography>
         <Typography variant="body1" gutterBottom>
-          $0
+          &nbsp;{balance} QUIZ
         </Typography>
       </div>
     </Container>
@@ -106,7 +125,7 @@ export default function Landing() {
       </Typography>
 
       { MetamaskConnect() }  
-      { showQuizBalance() }
+      { ShowQuizBalance() }
       { showSurveyIntro() }
 
     </Container>
