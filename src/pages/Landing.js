@@ -7,16 +7,14 @@ import Container from '@mui/material/Container';
 import getDailyQuiz from './quizes/Quiz';
 import { injected } from '../components/connectors';
 import { useWeb3React } from '@web3-react/core';
+import web3 from 'web3';
 import TokenListRopsten from '../assets/token_list_ropsten.json';
 import useBalance from '../actions/useBalance';
-
-import BN from 'bn.js'
-
-const ropstenChainId = 3;
+import ropstenData from '../assets/ropsten-testnet-data.json';
 
 function MetamaskConnect() {
 
-  const { active, account, chainId, activate } = useWeb3React();
+  const { active, account, chainId, connector, activate } = useWeb3React();
 
   const connectToWallet = async () => {
     console.log('Connect to wallet!');
@@ -29,6 +27,14 @@ function MetamaskConnect() {
 
   const connectToRopsten = async () => {
     console.log(`Current network: ${chainId}`);
+    try {
+      await web3.givenProvider.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: ropstenData.chainId }]
+      });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
 
@@ -46,14 +52,18 @@ function MetamaskConnect() {
           Connect to Metamask wallet
         </Button>
       }
-      { chainId == ropstenChainId ?
+      { (chainId == ropstenData.chainId) ?
         <Typography>
           Connected to ropsten
         </Typography>
         :
+        ( active ?
         <Button onClick={connectToRopsten}>
           Connect to ropsten
         </Button>
+        :
+        <Typography></Typography>
+        )
       }
     </Container>
   );
