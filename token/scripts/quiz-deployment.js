@@ -11,7 +11,7 @@ async function main() {
 
     // We get the contract to deploy
     const Quiz = await hre.ethers.getContractFactory("Quiz");
-    const quiz = await Quiz.deploy(10);
+    const quiz = await Quiz.deploy(1000);
 
     await quiz.deployed();
 

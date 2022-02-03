@@ -1,14 +1,14 @@
-[
-    {
+{
+    "Ethereum": {
         "name": "Ethereum",
         "address": "0x0000000000000000000000000000000000000000",
         "symbol": "ETH",
         "decimals": 18
     },
-    {
+    "QUIZ": {
         "name": "QUIZ",
-        "address": "0x945b70208dc553a61210D42Fdd6427b0C5D9a3dd",
+        "address": "0x6a6227eE75056e435AAb94C7EAf80aE4cd61Fb73",
         "symbol": "QUIZ",
         "decimals": 18
     }
-]
+}

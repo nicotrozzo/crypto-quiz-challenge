@@ -11,10 +11,14 @@ import web3 from 'web3';
 import TokenListRopsten from '../assets/token_list_ropsten.json';
 import useBalance from '../actions/useBalance';
 import ropstenData from '../assets/ropsten-testnet-data.json';
+import { getQuizContract } from '../store/contractStore';
+
+const tokenName = "QUIZ";
 
 function MetamaskConnect() {
 
   const { active, account, chainId, connector, activate } = useWeb3React();
+
 
   const connectToWallet = async () => {
     console.log('Connect to wallet!');
@@ -75,26 +79,30 @@ function MetamaskConnect() {
 
 function ShowQuizBalance() {
   
-  var tokenIndex = 1;  // $ETH until I create $QUIZ
-
-  const [ balance ] = useBalance(TokenListRopsten[tokenIndex].address, TokenListRopsten[tokenIndex].decimals);
+  const [ balance ] = useBalance(TokenListRopsten[tokenName].address, TokenListRopsten[tokenName].decimals);
 
   return (
     <Container>
       <Typography align="center" gutterBottom>
-        Your balance: <b>{balance} {TokenListRopsten[tokenIndex].symbol}</b>
+        Your balance: <b>{balance} {TokenListRopsten[tokenName].symbol}</b>
       </Typography>
     </Container>
   );
 }
 
-function showSurveyIntro() {
+function ShowSurveyIntro() {
+
+  const { account, library } = useWeb3React();
+
 
   // This would be replaced by a request to the backend
   const quiz = getDailyQuiz();
 
-  const startSurvey = () => {
+  const startSurvey = async () => {
     console.log('Start survey!');
+    const contract = getQuizContract(TokenListRopsten[tokenName].address, library, account);
+    var result = await contract.methods.claimQuiz(1).call();
+    console.log(result);
   };
 
   return (
@@ -137,7 +145,7 @@ export default function Landing() {
 
       { MetamaskConnect() }  
       { ShowQuizBalance() }
-      { showSurveyIntro() }
+      { ShowSurveyIntro() }
 
     </Container>
   )
