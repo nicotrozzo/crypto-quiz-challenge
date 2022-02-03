@@ -4,5 +4,11 @@
         "address": "0x0000000000000000000000000000000000000000",
         "symbol": "ETH",
         "decimals": 18
+    },
+    {
+        "name": "QUIZ",
+        "address": "0x945b70208dc553a61210D42Fdd6427b0C5D9a3dd",
+        "symbol": "QUIZ",
+        "decimals": 18
     }
 ]

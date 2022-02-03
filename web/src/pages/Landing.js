@@ -75,7 +75,7 @@ function MetamaskConnect() {
 
 function ShowQuizBalance() {
   
-  var tokenIndex = 0;  // $ETH until I create $QUIZ
+  var tokenIndex = 1;  // $ETH until I create $QUIZ
 
   const [ balance ] = useBalance(TokenListRopsten[tokenIndex].address, TokenListRopsten[tokenIndex].decimals);
 
