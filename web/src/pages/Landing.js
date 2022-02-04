@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -92,18 +92,24 @@ function ShowQuizBalance() {
 
 function ShowSurveyIntro() {
 
-  const { account, library } = useWeb3React();
+  // const { account, library } = useWeb3React();
 
+  const { active, chainId } = useWeb3React();
 
   // This would be replaced by a request to the backend
   const quiz = getDailyQuiz();
 
   const startSurvey = async () => {
     console.log('Start survey!');
-    const contract = getQuizContract(TokenListRopsten[tokenName].address, library, account);
-    var result = await contract.methods.claimQuiz(1).call();
-    console.log(result);
+
+    // const contract = getQuizContract(TokenListRopsten[tokenName].address, library, account);
+    // var result = await contract.methods.claimQuiz(1).call();
+    // console.log(result);
   };
+
+  const isReady = () => {
+    return (active && (chainId == ropstenData.chainId));
+  }
 
   return (
     <Container>
@@ -121,14 +127,20 @@ function ShowSurveyIntro() {
       </div>
       
       <Box textAlign="center">
-        <Button 
-          onClick={startSurvey} 
-          variant="contained" 
-          color="primary" 
-          align="center" 
-          type="submit">
-          Start survey!
-        </Button>
+        { isReady() ?
+          (<Link to="/survey" style={{ "textDecoration": "none"}}>    
+            <Button 
+              onClick={startSurvey} 
+              variant="contained" 
+              color="primary" 
+              align="center" 
+              type="submit">           
+                Start survey! 
+            </Button> 
+          </Link>)         
+          :
+          <div></div>
+        }
       </Box>
 
     </Container>

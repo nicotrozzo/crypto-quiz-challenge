@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Landing from './pages/Landing';
+import Survey from './pages/Survey';
 import { Web3ReactProvider } from '@web3-react/core';
 import Web3 from 'web3';
 
@@ -15,6 +16,8 @@ function App() {
           <Route exact path="/">
             <Landing />
           </Route>
+          <Route path="/survey" component={Survey} onEnter={() => console.log('Entered survey')} />
+          {/* </Route> */}
         </Switch>
       </Router>
     </Web3ReactProvider>
