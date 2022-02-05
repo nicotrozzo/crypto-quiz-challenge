@@ -10,11 +10,17 @@ export default function useBalance(
   decimals,
 ) {
   const [balance, setBalance] = useState('0');
+  const [newHeader, setNewHeader] = useState(false);
 
   const { account, library } = useWeb3React();
 
   useEffect(() => {
     let isCancelled = false;
+
+    if (newHeader == true)
+    {
+      setNewHeader(false);
+    }
 
     function getBalance() {
       return new Promise((resolve) => {
@@ -66,7 +72,27 @@ export default function useBalance(
     return () => {
       isCancelled = true;
     }
-  }, [tokenAddress, library, decimals, account])
+  }, [tokenAddress, library, decimals, account, newHeader])
+
+  useEffect(() => {
+    console.log('useEffectBlock');
+    console.log(library?.eth);
+    // Subscribe to blocks
+    let subscription = library?.eth?.subscribe('newBlockHeaders', function(error, result){
+      if (!error) {
+        // "Emit event" so that the balance is refreshed
+        setNewHeader(true);
+        return;
+      }
+  
+      console.error(error);
+  })
+  .on("connected", function(subscriptionId){
+    console.log(subscriptionId);
+  })
+  .on("error", console.error);
+
+  }, [account, library]);
 
   return [balance];
 }

@@ -11,7 +11,6 @@ import web3 from 'web3';
 import TokenListRopsten from '../assets/token_list_ropsten.json';
 import useBalance from '../actions/useBalance';
 import ropstenData from '../assets/ropsten-testnet-data.json';
-import { getQuizContract } from '../store/contractStore';
 
 const tokenName = "QUIZ";
 
@@ -101,10 +100,6 @@ function ShowSurveyIntro() {
 
   const startSurvey = async () => {
     console.log('Start survey!');
-
-    // const contract = getQuizContract(TokenListRopsten[tokenName].address, library, account);
-    // var result = await contract.methods.claimQuiz(1).call();
-    // console.log(result);
   };
 
   const isReady = () => {

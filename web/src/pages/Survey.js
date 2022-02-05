@@ -12,6 +12,10 @@ import Typography from '@mui/material/Typography';
 // Web3 imports
 import { useWeb3React } from '@web3-react/core'; // use web3 to check user is connected
 import ropstenData from '../assets/ropsten-testnet-data.json';
+import TokenListRopsten from '../assets/token_list_ropsten.json';
+
+// Custom contract
+import { getQuizContract } from '../store/contractStore';
 
 // Custom code
 import getDailyQuiz from './quizes/Quiz';
@@ -19,9 +23,11 @@ import getDailyQuiz from './quizes/Quiz';
 import Question from './Question';
 import Overview from './Overview';
 
+const tokenName = "QUIZ";
+
 export default function Survey() {
 
-    const { active, chainId } = useWeb3React();
+    const { active, chainId, library, account } = useWeb3React();
 
     // This would be replaced by a request to the backend
     const questions = getDailyQuiz()["questions"];
@@ -78,7 +84,6 @@ export default function Survey() {
         if (finished)
         {
             console.log('Finished quiz!');
-            console.log(`Answered ${answers.length} questions`);    
         }
     }, [finished]);
 
@@ -89,9 +94,12 @@ export default function Survey() {
         setSelectedAnswer(answerIndex);
     };
 
-    const submitAnswers = () => {
-        console.log('Claim $QUIZ!');
-        console.log('Back to main page');
+    const submitAnswers = async () => {
+        const contract = getQuizContract(TokenListRopsten[tokenName].address, library, account);
+        const amountAnswered = answers.reduce( (prev, curr) => {
+            return prev + (curr >= 0 ? 1 : 0); 
+        }, 0);
+        var result = await contract.methods.claimQuiz(amountAnswered).send();
     };
 
     return (
