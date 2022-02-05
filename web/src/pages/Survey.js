@@ -8,7 +8,6 @@ import { useInterval } from '../actions/useInterval';
 // Material UI
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 
 // Web3 imports
 import { useWeb3React } from '@web3-react/core'; // use web3 to check user is connected
@@ -75,11 +74,6 @@ export default function Survey() {
         }    
     }, [timeRemaining]);
 
-    // useEffect( () => {
-    //     console.log(`Updated answers: ${answers}`);
-    //     console.log(`Answered ${answers.length} questions so far`);
-    // }, [answers]);
-
     useEffect( () => {
         if (finished)
         {
@@ -102,7 +96,7 @@ export default function Survey() {
 
     return (
         <Container>
-            {(active && (chainId == ropstenData.chainId)) || true?
+            {(active && (chainId == ropstenData.chainId)) ?
                 ((finished == false) ?
                     <Question 
                         questions={questions} 

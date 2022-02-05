@@ -1,11 +1,43 @@
 {
-   "title":"Music",
+   "title":"Rock",
    "image":"https://upload.wikimedia.org/wikipedia/commons/1/10/The_Rolling_Stones_Summerfest_in_Milwaukee_-_2015.jpg",
    "questions":[
       {
-         "text":"¿Charly Garcia or Gustavo Cerati?",
-         "image":"https://cdn.ciudad.com.ar/sites/default/files/styles/grizzly_galeria/public/files_drupal_6/2011/11/11/charly_garcia.jpg?itok=2SVwFAja",
-         "lifetimeSeconds":3,
+         "text": "Which is your favorite Pink Floyd album?",
+         "image": "./pink-floyd.jpeg",
+         "lifetimeSeconds": 8,
+         "options": [
+            {
+               "text": "The Dark Side of the Moon"
+            },
+            {
+               "text": "The Wall"
+            },
+            {
+               "text": "Wish You Were Here"
+            }
+         ]
+      },
+      {
+         "text":"Who would you prefer to have dinner with?",
+         "image":"./artists.jpg",
+         "lifetimeSeconds": 9,
+         "options":[
+            {
+               "text":"John Lennon"
+            },
+            {
+               "text":"Michael Jackson"
+            },
+            {
+               "text":"Kurt Cobain"
+            }
+         ]
+      },
+      {
+         "text":"Charly Garcia or Gustavo Cerati?",
+         "image":"./charly-cerati.png",
+         "lifetimeSeconds": 10,
          "options":[
             {
                "text":"Charly"
@@ -15,22 +47,6 @@
             },
             {
                "text":"Both"
-            }
-         ]
-      },
-      {
-         "text":"Question2",
-         "image":"https://filedn.com/ltOdFv1aqz1YIFhf4gTY8D7/ingus-info/BLOGS/Photography-stocks3/stock-photography-slider.jpg",
-         "lifetimeSeconds":3,
-         "options":[
-            {
-               "text":"Opt1"
-            },
-            {
-               "text":"Opt2"
-            },
-            {
-               "text":"Opt"
             }
          ]
       }
