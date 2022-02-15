@@ -5,7 +5,7 @@
       {
          "text": "Which is your favorite Pink Floyd album?",
          "image": "./pink-floyd.jpeg",
-         "lifetimeSeconds": 1,
+         "lifetimeSeconds": 10,
          "options": [
             {
                "text": "The Dark Side of the Moon"
@@ -21,7 +21,7 @@
       {
          "text":"Who would you prefer to have dinner with?",
          "image":"./artists.jpg",
-         "lifetimeSeconds": 1,
+         "lifetimeSeconds": 9,
          "options":[
             {
                "text":"John Lennon"
@@ -37,7 +37,7 @@
       {
          "text":"Charly Garcia or Gustavo Cerati?",
          "image":"./charly-cerati.png",
-         "lifetimeSeconds": 1,
+         "lifetimeSeconds": 8,
          "options":[
             {
                "text":"Charly"
